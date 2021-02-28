@@ -5,6 +5,8 @@ from collections import OrderedDict
 import torch
 import csv
 import util
+from model import MoEbert
+from model import MoEbertConfig
 from transformers import DistilBertTokenizerFast
 from transformers import DistilBertForQuestionAnswering
 from transformers import AdamW
@@ -149,7 +151,7 @@ class Trainer():
             os.makedirs(self.path)
 
     def save(self, model):
-        model.save_pretrained(self.path)
+        torch.save(model, os.path.join(self.path,'distilbert-base-uncased'))
 
     def evaluate(self, model, data_loader, data_dict, return_preds=False, split='validation'):
         device = self.device
@@ -256,7 +258,7 @@ def main():
     args = get_train_test_args()
 
     util.set_seed(args.seed)
-    model = DistilBertForQuestionAnswering.from_pretrained("distilbert-base-uncased")
+    model = MoEbert(MoEbertConfig(max_length=384))
     tokenizer = DistilBertTokenizerFast.from_pretrained('distilbert-base-uncased')
 
     if args.do_train:
@@ -284,7 +286,7 @@ def main():
         log = util.get_logger(args.save_dir, f'log_{split_name}')
         trainer = Trainer(args, log)
         checkpoint_path = os.path.join(args.save_dir, 'checkpoint')
-        model = DistilBertForQuestionAnswering.from_pretrained(checkpoint_path)
+        model = torch.load(os.path.join(checkpoint_path,'distilbert-base-uncased'))
         model.to(args.device)
         eval_dataset, eval_dict = get_dataset(args, args.eval_datasets, args.eval_dir, tokenizer, split_name)
         eval_loader = DataLoader(eval_dataset,
