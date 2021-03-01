@@ -27,6 +27,7 @@ class MoEbertConfig():
     expert_hidden_size = 1024
     qa_pdrop = 0.1
     max_length=384
+    weight_importance=1e-2
 
 
     def __init__(self, **kwargs):
@@ -56,6 +57,7 @@ class MoEbert(nn.Module):
 
         self.qa = nn.Linear(768, 2)
         self.dropout = nn.Dropout(config.qa_pdrop)
+        self.w_imp = config.weight_importance
 
 
         print("number of parameters: {}".format(sum(p.numel() for p in self.parameters())))
@@ -94,6 +96,12 @@ class MoEbert(nn.Module):
         start_logits = start_logits.squeeze(-1)  # (batch_size, max_len)
         end_logits = end_logits.squeeze(-1)
 
+        I = torch.sum(gate, dim=0)
+        if I.shape[0] == 1:
+            I_cv = I[0]
+        else:
+            I_cv = I.float().var() / (I.float().mean()**2 + 1e-10)
+
         total_loss = None
         if start_positions is not None and end_positions is not None:
             # If we are on multi-GPU, split add a dimension
@@ -110,10 +118,12 @@ class MoEbert(nn.Module):
             start_loss = loss_fct(start_logits, start_positions)
             end_loss = loss_fct(end_logits, end_positions)
             total_loss = (start_loss + end_loss) / 2
+            total_loss += I_cv * self.w_imp
 
         #if not return_dict:
          #   output = (start_logits, end_logits) + distOut[1:]
          #   return ((total_loss,) + output) if total_loss is not None else output
+
 
         return QuestionAnsweringModelOutput(
             loss=total_loss,
