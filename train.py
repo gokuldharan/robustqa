@@ -11,6 +11,7 @@ from transformers import DistilBertTokenizerFast
 from transformers import DistilBertForQuestionAnswering
 from transformers import AdamW
 from tensorboardX import SummaryWriter
+import torch.autograd.profiler as profiler
 
 
 from torch.utils.data import DataLoader
@@ -258,7 +259,7 @@ def main():
     args = get_train_test_args()
 
     util.set_seed(args.seed)
-    model = MoEbert(MoEbertConfig(max_length=384))
+    model = MoEbert(MoEbertConfig(max_length=384, weight_importance=args.unif_importance))
     tokenizer = DistilBertTokenizerFast.from_pretrained('distilbert-base-uncased')
 
 
@@ -283,7 +284,13 @@ def main():
         val_loader = DataLoader(val_dataset,
                                 batch_size=args.batch_size,
                                 sampler=SequentialSampler(val_dataset))
-        best_scores = trainer.train(model, train_loader, val_loader, val_dict)
+        if args.profile:
+            with profiler.profile(record_shapes=True) as prof:
+                with profiler.record_function("model_inference"):
+                    best_scores = trainer.train(model, train_loader, val_loader, val_dict)
+            print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))
+        else:
+            best_scores = trainer.train(model, train_loader, val_loader, val_dict)
     if args.do_eval:
         args.device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
         split_name = 'test' if 'test' in args.eval_dir else 'validation'

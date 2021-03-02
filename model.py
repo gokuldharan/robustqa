@@ -84,12 +84,23 @@ class MoEbert(nn.Module):
 
         enc = distOut[0]
         enc = self.dropout(enc)
-        exp_outs = [exp(enc) for exp in self.experts] #num_experts x 768
-        gate = self.softmax(self.gateNet(torch.flatten(enc, start_dim=1))) #num_experts
-        Y = torch.cuda.FloatTensor(enc.shape).fill_(0)
 
-        for i, out in enumerate(exp_outs):
-            Y += gate[:,i,None,None] * out
+        #print(exp_outs[0].shape)
+        gate = self.softmax(self.gateNet(torch.flatten(enc, start_dim=1))) #b x num_experts
+
+        ###V1
+        # Y = torch.cuda.FloatTensor(enc.shape).fill_(0)
+        # exp_outs = [exp(enc) for exp in self.experts] #num_experts x 768
+        #
+        # for i, out in enumerate(exp_outs):
+        #     Y += gate[:,i,None,None] * out
+
+        ###V2
+
+        exp_outs = [torch.unsqueeze(exp(enc),1) for exp in self.experts]
+        exp_outs = torch.cat(exp_outs, 1)
+        expanded_gate = gate.unsqueeze(2).unsqueeze(3).expand_as(exp_outs)
+        Y = torch.sum(torch.mul(exp_outs, expanded_gate), dim=1).squeeze()
 
         logits = self.qa(Y)
         start_logits, end_logits = logits.split(1, dim=-1)
