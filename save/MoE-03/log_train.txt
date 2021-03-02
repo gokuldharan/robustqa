@@ -1,0 +1,28 @@
+[03.02.21 02:05:32] Args: {
+    "batch_size": 16,
+    "continue_dir": "save/MoE-02",
+    "continue_train": true,
+    "do_eval": false,
+    "do_train": true,
+    "eval": false,
+    "eval_datasets": "race,relation_extraction,duorc",
+    "eval_dir": "datasets/oodomain_test",
+    "eval_every": 5000,
+    "lr": 3e-05,
+    "num_epochs": 1,
+    "num_visuals": 10,
+    "recompute_features": false,
+    "run_name": "MoE",
+    "save_dir": "save/MoE-03",
+    "seed": 42,
+    "sub_file": "",
+    "train": false,
+    "train_datasets": "squad,nat_questions,newsqa",
+    "train_dir": "datasets/indomain_train",
+    "val_dir": "datasets/indomain_val",
+    "visualize_predictions": false
+}
+[03.02.21 02:05:32] Preparing Training Data...
+[03.02.21 02:11:28] Preparing Validation Data...
+[03.02.21 02:12:20] Epoch: 0
+[03.02.21 02:12:24] Evaluating at step 0...

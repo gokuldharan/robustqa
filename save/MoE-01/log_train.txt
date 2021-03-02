@@ -1,0 +1,38 @@
+[02.28.21 12:56:09] Args: {
+    "batch_size": 16,
+    "do_eval": false,
+    "do_train": true,
+    "eval": false,
+    "eval_datasets": "race,relation_extraction,duorc",
+    "eval_dir": "datasets/oodomain_test",
+    "eval_every": 5000,
+    "lr": 3e-05,
+    "num_epochs": 3,
+    "num_visuals": 10,
+    "recompute_features": false,
+    "run_name": "MoE",
+    "save_dir": "save/MoE-01",
+    "seed": 42,
+    "sub_file": "",
+    "train": false,
+    "train_datasets": "squad,nat_questions,newsqa",
+    "train_dir": "datasets/indomain_train",
+    "val_dir": "datasets/indomain_val",
+    "visualize_predictions": false
+}
+[02.28.21 12:56:09] Preparing Training Data...
+[02.28.21 13:05:32] Preparing Validation Data...
+[02.28.21 13:09:05] Epoch: 0
+[02.28.21 13:09:15] Evaluating at step 0...
+[02.28.21 13:32:43] Visualizing in TensorBoard...
+[02.28.21 13:32:43] Eval F1: 07.66, EM: 00.12
+[02.28.21 16:18:01] Evaluating at step 5000...
+[02.28.21 16:41:36] Visualizing in TensorBoard...
+[02.28.21 16:41:36] Eval F1: 64.51, EM: 48.13
+[02.28.21 19:36:00] Evaluating at step 10000...
+[02.28.21 19:59:37] Visualizing in TensorBoard...
+[02.28.21 19:59:37] Eval F1: 67.37, EM: 51.07
+[02.28.21 22:49:54] Evaluating at step 15000...
+[02.28.21 23:13:31] Visualizing in TensorBoard...
+[02.28.21 23:13:31] Eval F1: 68.77, EM: 52.73
+[02.28.21 23:18:42] Epoch: 1

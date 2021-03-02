@@ -172,7 +172,6 @@ class Trainer():
                 # Forward
                 start_logits, end_logits = outputs.start_logits, outputs.end_logits
                 # TODO: compute loss
-
                 all_start_logits.append(start_logits)
                 all_end_logits.append(end_logits)
                 progress_bar.update(batch_size)

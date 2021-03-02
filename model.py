@@ -100,7 +100,7 @@ class MoEbert(nn.Module):
         exp_outs = [torch.unsqueeze(exp(enc),1) for exp in self.experts]
         exp_outs = torch.cat(exp_outs, 1)
         expanded_gate = gate.unsqueeze(2).unsqueeze(3).expand_as(exp_outs)
-        Y = torch.sum(torch.mul(exp_outs, expanded_gate), dim=1).squeeze()
+        Y = torch.sum(torch.mul(exp_outs, expanded_gate), dim=1).squeeze(1)
 
         logits = self.qa(Y)
         start_logits, end_logits = logits.split(1, dim=-1)
