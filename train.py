@@ -261,9 +261,13 @@ def main():
     model = MoEbert(MoEbertConfig(max_length=384))
     tokenizer = DistilBertTokenizerFast.from_pretrained('distilbert-base-uncased')
 
+
     if args.do_train:
         if not os.path.exists(args.save_dir):
             os.makedirs(args.save_dir)
+        if args.continue_train:
+            checkpoint_path = os.path.join(args.continue_dir, 'checkpoint')
+            model = torch.load(os.path.join(checkpoint_path,'distilbert-base-uncased'))
         args.save_dir = util.get_save_dir(args.save_dir, args.run_name)
         log = util.get_logger(args.save_dir, 'log_train')
         log.info(f'Args: {json.dumps(vars(args), indent=4, sort_keys=True)}')
