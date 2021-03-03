@@ -258,7 +258,7 @@ def main():
     args = get_train_test_args()
 
     util.set_seed(args.seed)
-    model = MoEbert(MoEbertConfig(max_length=384, weight_importance=args.unif_importance))
+    model = MoEbert(MoEbertConfig(max_length=384, weight_importance=args.unif_importance, num_experts = args.num_experts))
     tokenizer = DistilBertTokenizerFast.from_pretrained('distilbert-base-uncased')
 
 
@@ -267,7 +267,10 @@ def main():
             os.makedirs(args.save_dir)
         if args.continue_train:
             checkpoint_path = os.path.join(args.continue_dir, 'checkpoint')
-            model = torch.load(os.path.join(checkpoint_path,'distilbert-base-uncased'))
+            if args.baseline:
+                model = DistilBertForQuestionAnswering.from_pretrained(checkpoint_path)
+            else:
+                model = torch.load(os.path.join(checkpoint_path,'distilbert-base-uncased'))
         args.save_dir = util.get_save_dir(args.save_dir, args.run_name)
         log = util.get_logger(args.save_dir, 'log_train')
         log.info(f'Args: {json.dumps(vars(args), indent=4, sort_keys=True)}')
@@ -296,7 +299,11 @@ def main():
         log = util.get_logger(args.save_dir, f'log_{split_name}')
         trainer = Trainer(args, log)
         checkpoint_path = os.path.join(args.save_dir, 'checkpoint')
-        model = torch.load(os.path.join(checkpoint_path,'distilbert-base-uncased'))
+        if args.baseline:
+            model = DistilBertForQuestionAnswering.from_pretrained(checkpoint_path)
+        else:
+            model = torch.load(os.path.join(checkpoint_path,'distilbert-base-uncased'))
+
         model.to(args.device)
         eval_dataset, eval_dict = get_dataset(args, args.eval_datasets, args.eval_dir, tokenizer, split_name)
         eval_loader = DataLoader(eval_dataset,
