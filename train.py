@@ -258,7 +258,7 @@ def main():
     args = get_train_test_args()
 
     util.set_seed(args.seed)
-    model = MoEbert(MoEbertConfig(max_length=384, weight_importance=args.unif_importance))
+    model = MoEbert(MoEbertConfig(max_length=384, weight_importance=args.unif_importance, num_experts = args.num_experts))
     tokenizer = DistilBertTokenizerFast.from_pretrained('distilbert-base-uncased')
 
 
