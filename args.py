@@ -26,5 +26,6 @@ def get_train_test_args():
     parser.add_argument('--eval-every', type=int, default=5000)
     parser.add_argument('--continue-train', action='store_true')
     parser.add_argument('--profile', action='store_true')
+    parser.add_argument('--baseline', action='store_true')
     args = parser.parse_args()
     return args
