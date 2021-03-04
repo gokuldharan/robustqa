@@ -28,6 +28,7 @@ class MoEbertConfig():
     qa_pdrop = 0.1
     max_length=384
     weight_importance=1e-2
+    num_init = 0
 
 
     def __init__(self, **kwargs):
@@ -58,9 +59,10 @@ class MoEbert(nn.Module):
         self.qa = nn.Linear(768, 2)
         self.dropout = nn.Dropout(config.qa_pdrop)
         self.w_imp = config.weight_importance
-
-
+        for i in range(config.num_init):
+            self.distBert.transformer.layer[self.distBert.transformer.n_layers - 1 - i].apply(self.distBert._init_weights)
         print("number of parameters: {}".format(sum(p.numel() for p in self.parameters())))
+
 
     def forward(self,
                 input_ids=None,

@@ -28,5 +28,6 @@ def get_train_test_args():
     parser.add_argument('--profile', action='store_true')
     parser.add_argument('--baseline', action='store_true')
     parser.add_argument('--num-experts',type=int, default=12)
+    parser.add_argument('--num-init',type=int, default=0)
     args = parser.parse_args()
     return args
