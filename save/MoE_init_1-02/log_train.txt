@@ -1,7 +1,8 @@
-[03.02.21 02:05:32] Args: {
+[03.04.21 01:34:50] Args: {
+    "baseline": false,
     "batch_size": 16,
-    "continue_dir": "save/MoE-02",
-    "continue_train": true,
+    "continue_dir": "",
+    "continue_train": false,
     "do_eval": false,
     "do_train": true,
     "eval": false,
@@ -9,20 +10,24 @@
     "eval_dir": "datasets/oodomain_test",
     "eval_every": 5000,
     "lr": 3e-05,
-    "num_epochs": 1,
+    "num_epochs": 3,
+    "num_experts": 12,
+    "num_init": 1,
     "num_visuals": 10,
+    "profile": false,
     "recompute_features": false,
-    "run_name": "MoE",
-    "save_dir": "save/MoE-03",
+    "run_name": "MoE_init_1",
+    "save_dir": "save/MoE_init_1-02",
     "seed": 42,
     "sub_file": "",
     "train": false,
     "train_datasets": "squad,nat_questions,newsqa",
     "train_dir": "datasets/indomain_train",
+    "unif_importance": 0.01,
     "val_dir": "datasets/indomain_val",
     "visualize_predictions": false
 }
-[03.02.21 02:05:32] Preparing Training Data...
-[03.02.21 02:11:28] Preparing Validation Data...
-[03.02.21 02:12:20] Epoch: 0
-[03.02.21 02:12:24] Evaluating at step 0...
+[03.04.21 01:34:50] Preparing Training Data...
+[03.04.21 01:36:05] Preparing Validation Data...
+[03.04.21 01:36:21] Epoch: 0
+[03.04.21 01:36:23] Evaluating at step 0...
