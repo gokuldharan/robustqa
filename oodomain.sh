@@ -1,1 +1,1 @@
-python train.py --do-train --continue-train --continue-dir save/MoE_ui_1e-1-01/ --eval-every 45 --num-epochs 30 --run-name MoE_ui_1e-1_oodomain --train-datasets "race,relation_extraction,duorc" --train-dir datasets/oodomain_train/ --unif-importance 0.1 --val-dir datasets/oodomain_val/
+python train.py --do-train --continue-train --continue-dir save/MoE_ui_1e-3-01/ --eval-every 45 --num-epochs 30 --run-name MoE_ui_1e-3_oodomain --train-datasets "race,relation_extraction,duorc" --train-dir datasets/oodomain_train/ --unif-importance 0.001 --val-dir datasets/oodomain_val/
