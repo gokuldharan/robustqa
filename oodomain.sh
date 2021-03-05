@@ -1,1 +1,1 @@
-python train.py --do-train --continue-train --continue-dir save/MoE_exp_16-01/ --eval-every 45 --num-epochs 30 --run-name MoE_exp_16_oodomain --train-datasets "race,relation_extraction,duorc" --train-dir datasets/oodomain_train/ --val-dir datasets/oodomain_val/
+python train.py --do-train --continue-train --continue-dir save/MoE-02/ --eval-every 45 --num-epochs 30 --run-name MoE_02_oodomain --train-datasets "race,relation_extraction,duorc" --train-dir datasets/oodomain_train/ --val-dir datasets/oodomain_val/
