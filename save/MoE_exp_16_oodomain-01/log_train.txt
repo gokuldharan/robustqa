@@ -1,0 +1,36 @@
+[03.05.21 00:14:20] Args: {
+    "baseline": false,
+    "batch_size": 16,
+    "continue_dir": "save/MoE_exp_16-01/",
+    "continue_train": true,
+    "do_eval": false,
+    "do_train": true,
+    "eval": false,
+    "eval_datasets": "race,relation_extraction,duorc",
+    "eval_dir": "datasets/oodomain_test",
+    "eval_every": 45,
+    "lr": 3e-05,
+    "num_epochs": 30,
+    "num_experts": 12,
+    "num_init": 0,
+    "num_visuals": 10,
+    "profile": false,
+    "recompute_features": false,
+    "run_name": "MoE_exp_16_oodomain",
+    "save_dir": "save/MoE_exp_16_oodomain-01",
+    "seed": 42,
+    "sub_file": "",
+    "train": false,
+    "train_datasets": "race,relation_extraction,duorc",
+    "train_dir": "datasets/oodomain_train/",
+    "unif_importance": 0.01,
+    "val_dir": "datasets/oodomain_val/",
+    "visualize_predictions": false
+}
+[03.05.21 00:14:20] Preparing Training Data...
+[03.05.21 00:14:20] Preparing Validation Data...
+[03.05.21 00:14:20] Epoch: 0
+[03.05.21 00:14:22] Evaluating at step 0...
+[03.05.21 00:14:48] Visualizing in TensorBoard...
+[03.05.21 00:14:48] Eval F1: 45.67, EM: 30.10
+[03.05.21 00:16:03] Evaluating at step 45...
