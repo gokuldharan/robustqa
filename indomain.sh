@@ -1,1 +1,1 @@
-python train.py --do-train --run-name MoE_expsize_512 --expert-size 512
+python train.py --do-train --run-name MoE_BT --train-dir datasets_BT/indomain_train/
