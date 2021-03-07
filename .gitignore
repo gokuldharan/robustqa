@@ -1,4 +1,5 @@
 datasets/
+datasets_BT/
 *checkpoint/
 
 # Byte-compiled / optimized / DLL files
