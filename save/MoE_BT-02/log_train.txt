@@ -1,4 +1,4 @@
-[03.07.21 08:14:47] Args: {
+[03.07.21 09:12:30] Args: {
     "baseline": false,
     "batch_size": 16,
     "continue_dir": "",
@@ -28,4 +28,6 @@
     "val_dir": "datasets/indomain_val",
     "visualize_predictions": false
 }
-[03.07.21 08:14:47] Preparing Training Data...
+[03.07.21 09:12:30] Preparing Training Data...
+[03.07.21 09:13:57] Preparing Validation Data...
+[03.07.21 09:14:12] Epoch: 0

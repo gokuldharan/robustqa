@@ -216,11 +216,11 @@ class Trainer():
                                     start_positions=start_positions,
                                     end_positions=end_positions)
                     loss = outputs[0]
-                    loss.backward()
+                    loss.sum().backward()
                     optim.step()
                     progress_bar.update(len(input_ids))
-                    progress_bar.set_postfix(epoch=epoch_num, NLL=loss.item())
-                    tbx.add_scalar('train/NLL', loss.item(), global_idx)
+                    progress_bar.set_postfix(epoch=epoch_num, NLL=loss.sum().item())
+                    tbx.add_scalar('train/NLL', loss.sum().item(), global_idx)
                     if (global_idx % self.eval_every) == 0:
                         self.log.info(f'Evaluating at step {global_idx}...')
                         preds, curr_score = self.evaluate(model, eval_dataloader, val_dict, return_preds=True)
@@ -271,6 +271,9 @@ def main():
                 model = DistilBertForQuestionAnswering.from_pretrained(checkpoint_path)
             else:
                 model = torch.load(os.path.join(checkpoint_path,'distilbert-base-uncased'))
+        if not args.continue_train and torch.cuda.device_count() > 1:
+            print("Using multiple GPUs")
+            model = torch.nn.DataParallel(model)
         args.save_dir = util.get_save_dir(args.save_dir, args.run_name)
         log = util.get_logger(args.save_dir, 'log_train')
         log.info(f'Args: {json.dumps(vars(args), indent=4, sort_keys=True)}')
@@ -303,6 +306,9 @@ def main():
             model = DistilBertForQuestionAnswering.from_pretrained(checkpoint_path)
         else:
             model = torch.load(os.path.join(checkpoint_path,'distilbert-base-uncased'))
+        #if torch.cuda.device_count() > 1:
+        #    print("Using multiple GPUs")
+        #    model = torch.nn.DataParallel(model)
 
         model.to(args.device)
         eval_dataset, eval_dict = get_dataset(args, args.eval_datasets, args.eval_dir, tokenizer, split_name)
