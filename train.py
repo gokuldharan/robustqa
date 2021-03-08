@@ -148,6 +148,7 @@ class Trainer():
         self.save_dir = args.save_dir
         self.log = log
         self.visualize_predictions = args.visualize_predictions
+        self.visualize_worst = args.visualize_worst
         if not os.path.exists(self.path):
             os.makedirs(self.path)
 
@@ -182,8 +183,12 @@ class Trainer():
         preds = util.postprocess_qa_predictions(data_dict,
                                                  data_loader.dataset.encodings,
                                                  (start_logits, end_logits))
+        worst_ids = []
         if split == 'validation':
-            results = util.eval_dicts(data_dict, preds)
+            if self.visualize_worst:
+                results, worst_ids = util.eval_dicts(data_dict, preds, self.num_visuals)
+            else:
+                results = util.eval_dicts(data_dict, preds)
             results_list = [('F1', results['F1']),
                             ('EM', results['EM'])]
         else:
@@ -191,7 +196,7 @@ class Trainer():
                             ('EM', -1.0)]
         results = OrderedDict(results_list)
         if return_preds:
-            return preds, results
+            return preds, results, worst_ids
         return results
 
     def train(self, model, train_dataloader, eval_dataloader, val_dict):
@@ -223,7 +228,7 @@ class Trainer():
                     tbx.add_scalar('train/NLL', loss.sum().item(), global_idx)
                     if (global_idx % self.eval_every) == 0:
                         self.log.info(f'Evaluating at step {global_idx}...')
-                        preds, curr_score = self.evaluate(model, eval_dataloader, val_dict, return_preds=True)
+                        preds, curr_score, worst_ids = self.evaluate(model, eval_dataloader, val_dict, return_preds=True)
                         results_str = ', '.join(f'{k}: {v:05.2f}' for k, v in curr_score.items())
                         self.log.info('Visualizing in TensorBoard...')
                         for k, v in curr_score.items():
@@ -236,6 +241,14 @@ class Trainer():
                                            step=global_idx,
                                            split='val',
                                            num_visuals=self.num_visuals)
+                        if self.visualize_worst:
+                            util.visualize(tbx,
+                                           pred_dict=preds,
+                                           gold_dict=val_dict,
+                                           step=global_idx,
+                                           split='val',
+                                           num_visuals=self.num_visuals,
+                                           visual_ids=worst_ids)
                         if curr_score['F1'] >= best_scores['F1']:
                             best_scores = curr_score
                             self.save(model)

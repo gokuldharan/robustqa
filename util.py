@@ -28,7 +28,7 @@ def save_pickle(obj, path):
         pickle.dump(obj, f)
     return
 
-def visualize(tbx, pred_dict, gold_dict, step, split, num_visuals):
+def visualize(tbx, pred_dict, gold_dict, step, split, num_visuals, visual_ids=None):
     """Visualize text examples to TensorBoard.
 
     Args:
@@ -43,7 +43,8 @@ def visualize(tbx, pred_dict, gold_dict, step, split, num_visuals):
     if num_visuals > len(pred_dict):
         num_visuals = len(pred_dict)
     id2index = {curr_id : idx for idx, curr_id in enumerate(gold_dict['id'])}
-    visual_ids = np.random.choice(list(pred_dict), size=num_visuals, replace=False)
+    if visual_ids is None:
+        visual_ids = np.random.choice(list(pred_dict), size=num_visuals, replace=False)
     for i, id_ in enumerate(visual_ids):
         pred = pred_dict[id_] or 'N/A'
         idx_gold_dict = id2index[id_]
@@ -294,19 +295,26 @@ def metric_max_over_ground_truths(metric_fn, prediction, ground_truths):
     return max(scores_for_ground_truths)
 
 
-def eval_dicts(gold_dict, pred_dict):
+def eval_dicts(gold_dict, pred_dict, n_worst=None):
     avna = f1 = em = total = 0
     id2index = {curr_id : idx for idx, curr_id in enumerate(gold_dict['id'])}
+    id2f1 = {}
     for curr_id in pred_dict:
         total += 1
         index = id2index[curr_id]
         ground_truths = gold_dict['answer'][index]['text']
         prediction = pred_dict[curr_id]
         em += metric_max_over_ground_truths(compute_em, prediction, ground_truths)
-        f1 += metric_max_over_ground_truths(compute_f1, prediction, ground_truths)
+        curr_f1 = metric_max_over_ground_truths(compute_f1, prediction, ground_truths)
+        if n_worst is not None:
+            id2f1[curr_id] = curr_f1
+        f1 += curr_f1
 
     eval_dict = {'EM': 100. * em / total,
                  'F1': 100. * f1 / total}
+    if n_worst is not None:
+        sortedIds = [id for id in sorted(id2f1.items(), key=lambda x: x[1])]
+        return eval_dict, sortedIds[:n_worst]
     return eval_dict
 
 def postprocess_qa_predictions(examples, features, predictions,
