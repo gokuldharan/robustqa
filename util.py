@@ -313,7 +313,7 @@ def eval_dicts(gold_dict, pred_dict, n_worst=None):
     eval_dict = {'EM': 100. * em / total,
                  'F1': 100. * f1 / total}
     if n_worst is not None:
-        sortedIds = [id for id in sorted(id2f1.items(), key=lambda x: x[1])]
+        sortedIds = [id for id,f1 in sorted(id2f1.items(), key=lambda x: x[1])]
         return eval_dict, sortedIds[:n_worst]
     return eval_dict
 
