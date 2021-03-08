@@ -30,5 +30,6 @@ def get_train_test_args():
     parser.add_argument('--num-experts',type=int, default=12)
     parser.add_argument('--num-init',type=int, default=0)
     parser.add_argument('--expert-size',type=int, default=1024)
+    parser.add_argument('--force-serial',action='store_true')
     args = parser.parse_args()
     return args

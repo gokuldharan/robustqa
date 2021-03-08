@@ -271,7 +271,7 @@ def main():
                 model = DistilBertForQuestionAnswering.from_pretrained(checkpoint_path)
             else:
                 model = torch.load(os.path.join(checkpoint_path,'distilbert-base-uncased'))
-        if not args.continue_train and torch.cuda.device_count() > 1:
+        if not isinstance(model, torch.nn.DataParallel) and not args.force_serial and torch.cuda.device_count() > 1:
             print("Using multiple GPUs")
             model = torch.nn.DataParallel(model)
         args.save_dir = util.get_save_dir(args.save_dir, args.run_name)
@@ -306,9 +306,9 @@ def main():
             model = DistilBertForQuestionAnswering.from_pretrained(checkpoint_path)
         else:
             model = torch.load(os.path.join(checkpoint_path,'distilbert-base-uncased'))
-        #if torch.cuda.device_count() > 1:
-        #    print("Using multiple GPUs")
-        #    model = torch.nn.DataParallel(model)
+        if not isinstance(model, torch.nn.DataParallel) and not args.force_serial and torch.cuda.device_count() > 1:
+            print("Using multiple GPUs")
+            model = torch.nn.DataParallel(model)
 
         model.to(args.device)
         eval_dataset, eval_dict = get_dataset(args, args.eval_datasets, args.eval_dir, tokenizer, split_name)

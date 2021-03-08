@@ -1,0 +1,48 @@
+[03.08.21 05:31:41] Args: {
+    "baseline": false,
+    "batch_size": 16,
+    "continue_dir": "save/MoE-04/",
+    "continue_train": true,
+    "do_eval": false,
+    "do_train": true,
+    "eval": false,
+    "eval_datasets": "race,relation_extraction,duorc",
+    "eval_dir": "datasets/oodomain_test",
+    "eval_every": 45,
+    "expert_size": 1024,
+    "lr": 3e-05,
+    "num_epochs": 30,
+    "num_experts": 12,
+    "num_init": 0,
+    "num_visuals": 10,
+    "profile": false,
+    "recompute_features": false,
+    "run_name": "sanityCheck",
+    "save_dir": "save/sanityCheck-01",
+    "seed": 42,
+    "sub_file": "",
+    "train": false,
+    "train_datasets": "race,relation_extraction,duorc",
+    "train_dir": "datasets/oodomain_train/",
+    "unif_importance": 0.01,
+    "val_dir": "datasets/oodomain_val/",
+    "visualize_predictions": false
+}
+[03.08.21 05:31:41] Preparing Training Data...
+[03.08.21 05:31:41] Preparing Validation Data...
+[03.08.21 05:31:42] Epoch: 0
+[03.08.21 05:31:43] Evaluating at step 0...
+[03.08.21 05:32:06] Visualizing in TensorBoard...
+[03.08.21 05:32:06] Eval F1: 47.80, EM: 31.68
+[03.08.21 05:33:10] Evaluating at step 45...
+[03.08.21 05:33:34] Visualizing in TensorBoard...
+[03.08.21 05:33:34] Eval F1: 48.25, EM: 32.72
+[03.08.21 05:33:41] Epoch: 1
+[03.08.21 05:34:43] Evaluating at step 90...
+[03.08.21 05:35:06] Visualizing in TensorBoard...
+[03.08.21 05:35:06] Eval F1: 49.23, EM: 34.29
+[03.08.21 05:35:18] Epoch: 2
+[03.08.21 05:36:17] Evaluating at step 135...
+[03.08.21 05:36:40] Visualizing in TensorBoard...
+[03.08.21 05:36:40] Eval F1: 49.05, EM: 34.03
+[03.08.21 05:36:51] Epoch: 3
