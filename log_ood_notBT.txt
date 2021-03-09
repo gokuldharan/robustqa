@@ -1,0 +1,9 @@
+number of parameters: 88799246
+[03.09.21 09:40:01] Eval F1: 83.90, EM: 70.87
+[03.09.21 09:40:01] Writing submission file to save/MoE_04_oodomain_BT-01/validation_val_submission.csv...
+number of parameters: 88799246
+[03.09.21 09:40:12] Eval F1: 79.96, EM: 66.93
+[03.09.21 09:40:12] Writing submission file to save/MoE_04_oodomain_BT-01/validation_val_submission.csv...
+number of parameters: 88799246
+[03.09.21 09:40:29] Eval F1: 77.60, EM: 63.78
+[03.09.21 09:40:29] Writing submission file to save/MoE_04_oodomain_BT-01/validation_val_submission.csv...

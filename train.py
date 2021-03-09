@@ -203,13 +203,20 @@ class Trainer():
         device = self.device
         model.to(device)
         no_decay = ["bias", "LayerNorm.weight"]
-        params_highlr = model.experts.parameters()
-        params_nodecay = [p for n, p in model.named_parameters() if any(nd in n for nd in no_decay)]
-        other_params = [p for p in model.parameters() if p not in params_highlr and p not in params_nodecay]
+        if isinstance(model, torch.nn.DataParallel):
+            modelMod = model.module
+        else:
+            modelMod = model
+        params_nodecay = [p for n, p in modelMod.distBert.named_parameters() if any(nd in n for nd in no_decay)]
+        print(len(params_nodecay))
+        other_params = [p for n,p in modelMod.distBert.named_parameters() if not any(nd in n for nd in no_decay)]
+        print(len(other_params))
         optim_groups = [
-            {"params": params_highlr, "lr": 1e-3},
-            {"params": params_nodecay, "weight_decay": 0.0},
-            {"params": other_params, "lr": self.lr}
+            {"params": modelMod.experts.parameters(), "lr": self.lr},
+            {"params": modelMod.gateNet.parameters(), "lr": self.lr},
+            {"params": modelMod.qa.parameters(), "lr":self.lr},
+            {"params": params_nodecay, "weight_decay":0.0, "lr":self.lr},
+            {"params": other_params, "lr":self.lr}
         ]
         optim = AdamW(optim_groups)
         global_idx = 0
@@ -337,7 +344,7 @@ def main():
         eval_loader = DataLoader(eval_dataset,
                                  batch_size=args.batch_size,
                                  sampler=SequentialSampler(eval_dataset))
-        eval_preds, eval_scores = trainer.evaluate(model, eval_loader,
+        eval_preds, eval_scores, _ = trainer.evaluate(model, eval_loader,
                                                    eval_dict, return_preds=True,
                                                    split=split_name)
         results_str = ', '.join(f'{k}: {v:05.2f}' for k, v in eval_scores.items())

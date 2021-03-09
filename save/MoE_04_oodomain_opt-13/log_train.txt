@@ -1,0 +1,65 @@
+[03.09.21 10:39:48] Args: {
+    "baseline": false,
+    "batch_size": 16,
+    "continue_dir": "save/MoE-04",
+    "continue_train": true,
+    "do_eval": false,
+    "do_train": true,
+    "eval": false,
+    "eval_datasets": "race,relation_extraction,duorc",
+    "eval_dir": "datasets/oodomain_test",
+    "eval_every": 45,
+    "expert_size": 1024,
+    "force_serial": false,
+    "lr": 3e-05,
+    "num_epochs": 30,
+    "num_experts": 12,
+    "num_init": 0,
+    "num_visuals": 10,
+    "profile": false,
+    "recompute_features": false,
+    "run_name": "MoE_04_oodomain_opt",
+    "save_dir": "save/MoE_04_oodomain_opt-13",
+    "seed": 42,
+    "sub_file": "",
+    "train": false,
+    "train_datasets": "race,relation_extraction,duorc",
+    "train_dir": "datasets/oodomain_train/",
+    "unif_importance": 0.01,
+    "val_dir": "datasets/oodomain_val/",
+    "visualize_predictions": false,
+    "visualize_worst": false
+}
+[03.09.21 10:39:48] Preparing Training Data...
+[03.09.21 10:39:48] Preparing Validation Data...
+[03.09.21 10:39:48] Epoch: 0
+[03.09.21 10:39:53] Evaluating at step 0...
+[03.09.21 10:40:08] Visualizing in TensorBoard...
+[03.09.21 10:40:08] Eval F1: 47.58, EM: 31.15
+[03.09.21 10:40:51] Evaluating at step 45...
+[03.09.21 10:41:07] Visualizing in TensorBoard...
+[03.09.21 10:41:07] Eval F1: 48.22, EM: 32.72
+[03.09.21 10:41:13] Epoch: 1
+[03.09.21 10:41:54] Evaluating at step 90...
+[03.09.21 10:42:09] Visualizing in TensorBoard...
+[03.09.21 10:42:09] Eval F1: 50.07, EM: 34.55
+[03.09.21 10:42:19] Epoch: 2
+[03.09.21 10:42:57] Evaluating at step 135...
+[03.09.21 10:43:12] Visualizing in TensorBoard...
+[03.09.21 10:43:12] Eval F1: 50.70, EM: 35.60
+[03.09.21 10:43:25] Epoch: 3
+[03.09.21 10:44:00] Evaluating at step 180...
+[03.09.21 10:44:15] Visualizing in TensorBoard...
+[03.09.21 10:44:15] Eval F1: 50.49, EM: 34.29
+[03.09.21 10:44:26] Epoch: 4
+[03.09.21 10:44:58] Evaluating at step 225...
+[03.09.21 10:45:14] Visualizing in TensorBoard...
+[03.09.21 10:45:14] Eval F1: 49.90, EM: 33.25
+[03.09.21 10:45:27] Epoch: 5
+[03.09.21 10:45:56] Evaluating at step 270...
+[03.09.21 10:46:12] Visualizing in TensorBoard...
+[03.09.21 10:46:12] Eval F1: 48.75, EM: 32.46
+[03.09.21 10:46:27] Epoch: 6
+[03.09.21 10:46:54] Evaluating at step 315...
+[03.09.21 10:47:10] Visualizing in TensorBoard...
+[03.09.21 10:47:10] Eval F1: 47.63, EM: 30.37

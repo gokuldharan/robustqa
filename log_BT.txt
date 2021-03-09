@@ -1,0 +1,20 @@
+number of parameters: 88799246
+Using multiple GPUs
+[03.09.21 09:31:37] Eval F1: 77.61, EM: 64.23
+[03.09.21 09:31:37] Writing submission file to save/MoE_04_oodomain-01/validation_val_submission.csv...
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+number of parameters: 88799246
+Using multiple GPUs
+[03.09.21 09:31:58] Eval F1: 80.55, EM: 64.88
+[03.09.21 09:31:58] Writing submission file to save/MoE_04_oodomain-01/validation_val_submission.csv...
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+number of parameters: 88799246
+Using multiple GPUs
+[03.09.21 09:32:42] Eval F1: 69.80, EM: 55.29
+[03.09.21 09:32:42] Writing submission file to save/MoE_04_oodomain-01/validation_val_submission.csv...

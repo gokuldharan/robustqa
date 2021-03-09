@@ -1,0 +1,57 @@
+[03.09.21 11:04:42] Args: {
+    "baseline": false,
+    "batch_size": 16,
+    "continue_dir": "",
+    "continue_train": false,
+    "do_eval": false,
+    "do_train": true,
+    "eval": false,
+    "eval_datasets": "race,relation_extraction,duorc",
+    "eval_dir": "datasets/oodomain_test",
+    "eval_every": 5000,
+    "expert_size": 1024,
+    "force_serial": false,
+    "lr": 3e-05,
+    "num_epochs": 3,
+    "num_experts": 12,
+    "num_init": 0,
+    "num_visuals": 10,
+    "profile": false,
+    "recompute_features": false,
+    "run_name": "MoE_all",
+    "save_dir": "save/MoE_all-01",
+    "seed": 37,
+    "sub_file": "",
+    "train": false,
+    "train_datasets": "squad,nat_questions,newsqa,race,relation_extraction,duorc",
+    "train_dir": "datasets/train/",
+    "unif_importance": 0.01,
+    "val_dir": "datasets/val/",
+    "visualize_predictions": false,
+    "visualize_worst": false
+}
+[03.09.21 11:04:42] Preparing Training Data...
+[03.09.21 11:06:46] Preparing Validation Data...
+[03.09.21 11:07:07] Epoch: 0
+[03.09.21 11:07:17] Evaluating at step 0...
+[03.09.21 11:21:37] Visualizing in TensorBoard...
+[03.09.21 11:21:37] Eval F1: 08.46, EM: 00.23
+[03.09.21 12:41:40] Evaluating at step 5000...
+[03.09.21 12:56:05] Visualizing in TensorBoard...
+[03.09.21 12:56:05] Eval F1: 64.64, EM: 48.12
+[03.09.21 14:15:56] Evaluating at step 10000...
+[03.09.21 14:30:26] Visualizing in TensorBoard...
+[03.09.21 14:30:26] Eval F1: 67.04, EM: 51.04
+[03.09.21 15:50:07] Evaluating at step 15000...
+[03.09.21 16:04:37] Visualizing in TensorBoard...
+[03.09.21 16:04:37] Eval F1: 68.96, EM: 52.74
+[03.09.21 16:09:59] Epoch: 1
+[03.09.21 17:24:16] Evaluating at step 20000...
+[03.09.21 17:38:46] Visualizing in TensorBoard...
+[03.09.21 17:38:46] Eval F1: 69.47, EM: 53.44
+[03.09.21 18:58:23] Evaluating at step 25000...
+[03.09.21 19:12:49] Visualizing in TensorBoard...
+[03.09.21 19:12:49] Eval F1: 69.95, EM: 53.87
+[03.09.21 20:32:28] Evaluating at step 30000...
+[03.09.21 20:46:54] Visualizing in TensorBoard...
+[03.09.21 20:46:54] Eval F1: 69.67, EM: 53.67

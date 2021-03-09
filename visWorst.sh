@@ -1,0 +1,1 @@
+python train.py --do-train --continue-train --continue-dir save/MoE_04_oodomain_BTv2_serial-02/ --eval-every 45 --num-epochs 1 --run-name MoE_04_oodomain_BTv2_vis --train-datasets "race,relation_extraction,duorc" --train-dir datasets_BT/oodomain_train/ --val-dir datasets_BT/oodomain_train/ --visualize-worst --num-visuals 50

@@ -1,1 +1,1 @@
-python train.py --do-train --continue-train --continue-dir save/MoE_BT-03/ --eval-every 45 --num-epochs 30 --run-name MoE_BT_oodomain_BT_serial --train-datasets "race,relation_extraction,duorc" --train-dir datasets_BT/oodomain_train/ --val-dir datasets_BT/oodomain_val/ --force-serial
+python train.py --do-train --continue-train --continue-dir save/MoE-04 --eval-every 45 --num-epochs 30 --run-name MoE_04_oodomain_opt_serial --force-serial --train-datasets "race,relation_extraction,duorc" --train-dir datasets/oodomain_train/ --val-dir datasets/oodomain_val/ 

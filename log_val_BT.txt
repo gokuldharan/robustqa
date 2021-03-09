@@ -1,0 +1,21 @@
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+number of parameters: 88799246
+[03.09.21 09:53:45] Eval F1: 34.19, EM: 20.31
+[03.09.21 09:53:45] Writing submission file to save/MoE_04_oodomain_BT-01/validation_val_submission.csv...
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+number of parameters: 88799246
+[03.09.21 09:53:56] Eval F1: 77.49, EM: 58.59
+[03.09.21 09:53:56] Writing submission file to save/MoE_04_oodomain_BT-01/validation_val_submission.csv...
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+number of parameters: 88799246
+[03.09.21 09:54:13] Eval F1: 39.34, EM: 26.98
+[03.09.21 09:54:13] Writing submission file to save/MoE_04_oodomain_BT-01/validation_val_submission.csv...
