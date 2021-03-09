@@ -207,7 +207,7 @@ class Trainer():
         params_nodecay = [p for n, p in model.named_parameters() if any(nd in n for nd in no_decay)]
         other_params = [p for p in model.parameters() if p not in params_highlr and p not in params_nodecay]
         optim_groups = [
-            {"params": params_highlr, "lr": 1e-3}
+            {"params": params_highlr, "lr": 1e-3},
             {"params": params_nodecay, "weight_decay": 0.0},
             {"params": other_params, "lr": self.lr}
         ]
