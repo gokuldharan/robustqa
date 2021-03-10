@@ -328,13 +328,24 @@ def main():
     if args.do_eval:
         args.device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
         split_name = 'test' if 'test' in args.eval_dir else 'validation'
-        log = util.get_logger(args.save_dir, f'log_{split_name}')
-        trainer = Trainer(args, log)
-        checkpoint_path = os.path.join(args.save_dir, 'checkpoint')
-        if args.baseline:
-            model = DistilBertForQuestionAnswering.from_pretrained(checkpoint_path)
+
+        if args.ensemble_name != '':
+            save_dirs = args.save_dir.split(",")
+            log = util.get_logger(save_dirs[0], f'log_{args.ensemble_name}_{split_name}')
+            models = []
+            for sd in save_dirs:
+                checkpoint_path = os.path.join(sd, 'checkpoint')
+                models.append(torch.load(os.path.join(checkpoint_path,'distilbert-base-uncased')))
+            model = EnsembleMoE(models)
         else:
-            model = torch.load(os.path.join(checkpoint_path,'distilbert-base-uncased'))
+            log = util.get_logger(args.save_dir, f'log_{split_name}')
+            checkpoint_path = os.path.join(args.save_dir, 'checkpoint')
+            if args.baseline:
+                model = DistilBertForQuestionAnswering.from_pretrained(checkpoint_path)
+            else:
+                model = torch.load(os.path.join(checkpoint_path,'distilbert-base-uncased'))
+
+        trainer = Trainer(args, log)
         if not isinstance(model, torch.nn.DataParallel) and not args.force_serial and torch.cuda.device_count() > 1:
             print("Using multiple GPUs")
             model = torch.nn.DataParallel(model)

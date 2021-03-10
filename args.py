@@ -8,6 +8,7 @@ def get_train_test_args():
     parser.add_argument('--num-visuals', type=int, default=10)
     parser.add_argument('--unif-importance', type=float, default=1e-2)
     parser.add_argument('--seed', type=int, default=42)
+    parser.add_argument('--ensemble-name', type=str, default='')
     parser.add_argument('--save-dir', type=str, default='save/')
     parser.add_argument('--continue-dir', type=str, default='')
     parser.add_argument('--train', action='store_true')

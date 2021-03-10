@@ -147,6 +147,47 @@ class MoEbert(nn.Module):
         )
 
 
+##Only for eval!
+class EnsembleMoE(nn.Module):
+    def __init__(self, modelList):
+        self.modelList = modelList
 
-class CustomLayerNorm(nn.Module):
-  pass
+    def forward(self,
+                input_ids=None,
+                attention_mask=None,
+                head_mask=None,
+                inputs_embeds=None,
+                start_positions=None,
+                end_positions=None,
+                output_attentions=None,
+                output_hidden_states=None,
+                return_dict=None):
+
+        start_logits = None
+        end_logits = None
+
+        for model in self.modelList:
+            outputs = (model(input_ids=None,
+                                attention_mask=None,
+                                head_mask=None,
+                                inputs_embeds=None,
+                                start_positions=None,
+                                end_positions=None,
+                                output_attentions=None,
+                                output_hidden_states=None,
+                                return_dict=None))
+            if start_logits is None:
+                start_logits, end_logits = outputs.start_logits, outputs.end_logits
+            else:
+                start_logits += outputs.start_logits
+                end_logits += outputs.end_logits
+
+
+        return QuestionAnsweringModelOutput(
+            loss = None,
+            start_logits = start_logits,
+            end_logits=end_logits,
+            hidden_states = None,
+            attentions=None
+        )
+
