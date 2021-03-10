@@ -303,6 +303,8 @@ def main():
                 model = DistilBertForQuestionAnswering.from_pretrained(checkpoint_path)
             else:
                 model = torch.load(os.path.join(checkpoint_path,'distilbert-base-uncased'))
+                ##HACK
+                model.exp_crossreg = args.exp_crossreg
         if not isinstance(model, torch.nn.DataParallel) and not args.force_serial and torch.cuda.device_count() > 1:
             print("Using multiple GPUs")
             model = torch.nn.DataParallel(model)
