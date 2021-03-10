@@ -29,6 +29,7 @@ class MoEbertConfig():
     max_length=384
     weight_importance=1e-2
     num_init = 0
+    exp_crossreg = 0
 
 
     def __init__(self, **kwargs):
@@ -59,6 +60,8 @@ class MoEbert(nn.Module):
         self.qa = nn.Linear(768, 2)
         self.dropout = nn.Dropout(config.qa_pdrop)
         self.w_imp = config.weight_importance
+        self.exp_crossreg = config.exp_crossreg
+        self.num_weights_per_expert = torch.cat((self.experts[0].fc1.weight.flatten(),self.experts[0].fc2.weight.flatten())).shape[0]
         for i in range(config.num_init):
             self.distBert.transformer.layer[self.distBert.transformer.n_layers - 1 - i].apply(self.distBert._init_weights)
         print("number of parameters: {}".format(sum(p.numel() for p in self.parameters())))
@@ -133,7 +136,16 @@ class MoEbert(nn.Module):
             total_loss = (start_loss + end_loss) / 2
             total_loss += I_cv * self.w_imp
 
-        #if not return_dict:
+
+            if self.exp_crossreg > 0 :
+                t = torch.empty((len(self.experts), self.num_weights_per_expert), device=torch.cuda.current_device())
+                for i, exp in enumerate(self.experts):
+                    t[i,:] = torch.cat((exp.fc1.weight.flatten(),exp.fc2.weight.flatten()))
+                t_var = torch.var(t, dim=0)
+                total_loss += 1/self.exp_crossreg*(t_var.sum()/self.num_weights_per_expert) * self.exp_crossreg
+
+
+            #if not return_dict:
          #   output = (start_logits, end_logits) + distOut[1:]
          #   return ((total_loss,) + output) if total_loss is not None else output
 
