@@ -1,1 +1,1 @@
-python train.py --do-train --continue-train --continue-dir save/MoE-04 --eval-every 45 --num-epochs 30 --run-name MoE_04_oodomain_CR --train-datasets "race,relation_extraction,duorc" --train-dir datasets/oodomain_train/ --val-dir datasets/oodomain_val/ --exp-crossreg 1e-5
+python train.py --do-train --continue-train --continue-dir save/MoE-04 --eval-every 45 --num-epochs 30 --run-name MoE_04_oodomain_CV_10 --force-serial --train-datasets "race,relation_extraction,duorc" --train-dir datasets/oodomain_train/ --val-dir datasets/oodomain_val/ --exp-crossreg 10000

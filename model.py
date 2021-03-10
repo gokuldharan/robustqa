@@ -141,8 +141,9 @@ class MoEbert(nn.Module):
                 t = torch.empty((len(self.experts), self.num_weights_per_expert), device=torch.cuda.current_device())
                 for i, exp in enumerate(self.experts):
                     t[i,:] = torch.cat((exp.fc1.weight.flatten(),exp.fc2.weight.flatten()))
-                t_var = torch.var(t, dim=0)
+                t_var = torch.var(t, dim=0) / (torch.mean(t, dim=0)**2 + 1e-10)
 
+                #print( 1/(t_var.sum()/self.num_weights_per_expert) * self.exp_crossreg)
                 total_loss += 1/(t_var.sum()/self.num_weights_per_expert) * self.exp_crossreg
 
 

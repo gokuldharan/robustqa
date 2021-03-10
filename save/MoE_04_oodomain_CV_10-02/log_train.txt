@@ -1,0 +1,40 @@
+[03.10.21 11:55:33] Args: {
+    "baseline": false,
+    "batch_size": 16,
+    "continue_dir": "save/MoE-04",
+    "continue_train": true,
+    "do_eval": false,
+    "do_train": true,
+    "ensemble_name": "",
+    "eval": false,
+    "eval_datasets": "race,relation_extraction,duorc",
+    "eval_dir": "datasets/oodomain_test",
+    "eval_every": 45,
+    "exp_crossreg": 10.0,
+    "expert_size": 1024,
+    "force_serial": true,
+    "lr": 3e-05,
+    "num_epochs": 30,
+    "num_experts": 12,
+    "num_init": 0,
+    "num_visuals": 10,
+    "profile": false,
+    "recompute_features": false,
+    "run_name": "MoE_04_oodomain_CV_10",
+    "save_dir": "save/MoE_04_oodomain_CV_10-02",
+    "seed": 42,
+    "sub_file": "",
+    "train": false,
+    "train_datasets": "race,relation_extraction,duorc",
+    "train_dir": "datasets/oodomain_train/",
+    "unif_importance": 0.01,
+    "val_dir": "datasets/oodomain_val/",
+    "visualize_predictions": false,
+    "visualize_worst": false
+}
+[03.10.21 11:55:33] Preparing Training Data...
+[03.10.21 11:55:33] Preparing Validation Data...
+[03.10.21 11:55:34] Epoch: 0
+[03.10.21 11:55:35] Evaluating at step 0...
+[03.10.21 11:56:01] Visualizing in TensorBoard...
+[03.10.21 11:56:01] Eval F1: 47.80, EM: 31.68
