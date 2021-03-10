@@ -202,23 +202,26 @@ class Trainer():
     def train(self, model, train_dataloader, eval_dataloader, val_dict):
         device = self.device
         model.to(device)
-        no_decay = ["bias", "LayerNorm.weight"]
-        if isinstance(model, torch.nn.DataParallel):
-            modelMod = model.module
+        if args.baseline:
+            optim = AdamW(model.parameters(), lr=self.lr)
         else:
-            modelMod = model
-        params_nodecay = [p for n, p in modelMod.distBert.named_parameters() if any(nd in n for nd in no_decay)]
-        print(len(params_nodecay))
-        other_params = [p for n,p in modelMod.distBert.named_parameters() if not any(nd in n for nd in no_decay)]
-        print(len(other_params))
-        optim_groups = [
-            {"params": modelMod.experts.parameters(), "lr": self.lr},
-            {"params": modelMod.gateNet.parameters(), "lr": self.lr},
-            {"params": modelMod.qa.parameters(), "lr":self.lr},
-            {"params": params_nodecay, "weight_decay":0.0, "lr":self.lr},
-            {"params": other_params, "lr":self.lr}
-        ]
-        optim = AdamW(optim_groups)
+            no_decay = ["bias", "LayerNorm.weight"]
+            if isinstance(model, torch.nn.DataParallel):
+                modelMod = model.module
+            else:
+                modelMod = model
+            params_nodecay = [p for n, p in modelMod.distBert.named_parameters() if any(nd in n for nd in no_decay)]
+            print(len(params_nodecay))
+            other_params = [p for n,p in modelMod.distBert.named_parameters() if not any(nd in n for nd in no_decay)]
+            print(len(other_params))
+            optim_groups = [
+                {"params": modelMod.experts.parameters(), "lr": self.lr},
+                {"params": modelMod.gateNet.parameters(), "lr": self.lr},
+                {"params": modelMod.qa.parameters(), "lr":self.lr},
+                {"params": params_nodecay, "weight_decay":0.0, "lr":self.lr},
+                {"params": other_params, "lr":self.lr}
+            ]
+            optim = AdamW(optim_groups)
         global_idx = 0
         best_scores = {'F1': -1.0, 'EM': -1.0}
         tbx = SummaryWriter(self.save_dir)
