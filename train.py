@@ -199,10 +199,10 @@ class Trainer():
             return preds, results, worst_ids
         return results
 
-    def train(self, model, train_dataloader, eval_dataloader, val_dict):
+    def train(self, model, train_dataloader, eval_dataloader, val_dict, is_baseline=False):
         device = self.device
         model.to(device)
-        if args.baseline:
+        if is_baseline:
             optim = AdamW(model.parameters(), lr=self.lr)
         else:
             no_decay = ["bias", "LayerNorm.weight"]
@@ -324,10 +324,10 @@ def main():
         if args.profile:
             with profiler.profile(record_shapes=True) as prof:
                 with profiler.record_function("model_inference"):
-                    best_scores = trainer.train(model, train_loader, val_loader, val_dict)
+                    best_scores = trainer.train(model, train_loader, val_loader, val_dict, is_baseline=args.baseline)
             print(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))
         else:
-            best_scores = trainer.train(model, train_loader, val_loader, val_dict)
+            best_scores = trainer.train(model, train_loader, val_loader, val_dict, is_baseline=args.baseline)
     if args.do_eval:
         args.device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
         split_name = 'test' if 'test' in args.eval_dir else 'validation'
