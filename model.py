@@ -142,7 +142,8 @@ class MoEbert(nn.Module):
                 for i, exp in enumerate(self.experts):
                     t[i,:] = torch.cat((exp.fc1.weight.flatten(),exp.fc2.weight.flatten()))
                 t_var = torch.var(t, dim=0)
-                total_loss += 1/self.exp_crossreg*(t_var.sum()/self.num_weights_per_expert) * self.exp_crossreg
+
+                total_loss += 1/(t_var.sum()/self.num_weights_per_expert) * self.exp_crossreg
 
 
             #if not return_dict:
