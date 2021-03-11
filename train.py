@@ -304,8 +304,12 @@ def main():
             else:
                 model = torch.load(os.path.join(checkpoint_path,'distilbert-base-uncased'))
                 ##HACK
-                model.exp_crossreg = args.exp_crossreg
-                model.num_weights_per_expert = torch.cat((model.experts[0].fc1.weight.flatten(),model.experts[0].fc2.weight.flatten())).shape[0]
+                # model.exp_crossreg = args.exp_crossreg
+                # if isinstance(model, torch.nn.DataParallel):
+                #     nW = torch.cat((model.module.experts[0].fc1.weight.flatten(),model.module.experts[0].fc2.weight.flatten())).shape[0]
+                # else:
+                #     nW = torch.cat((model.experts[0].fc1.weight.flatten(),model.experts[0].fc2.weight.flatten())).shape[0]
+                # model.num_weights_per_expert = nW
         if not isinstance(model, torch.nn.DataParallel) and not args.force_serial and torch.cuda.device_count() > 1:
             print("Using multiple GPUs")
             model = torch.nn.DataParallel(model)
