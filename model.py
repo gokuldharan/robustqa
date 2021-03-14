@@ -182,15 +182,15 @@ class EnsembleMoE(nn.Module):
         end_logits = None
 
         for model in self.modelList:
-            outputs = (model(input_ids=None,
-                                attention_mask=None,
-                                head_mask=None,
-                                inputs_embeds=None,
-                                start_positions=None,
-                                end_positions=None,
-                                output_attentions=None,
-                                output_hidden_states=None,
-                                return_dict=None))
+            outputs = (model(input_ids,
+                                attention_mask,
+                                head_mask,
+                                inputs_embeds,
+                                start_positions,
+                                end_positions,
+                                output_attentions,
+                                output_hidden_states,
+                                return_dict))
             if start_logits is None:
                 start_logits, end_logits = outputs.start_logits, outputs.end_logits
             else:
