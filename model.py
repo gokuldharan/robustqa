@@ -164,6 +164,7 @@ class MoEbert(nn.Module):
 ##Only for eval!
 class EnsembleMoE(nn.Module):
     def __init__(self, modelList):
+        super().__init__()
         self.modelList = modelList
 
     def forward(self,
