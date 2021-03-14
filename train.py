@@ -5,6 +5,7 @@ from collections import OrderedDict
 import torch
 import csv
 import util
+from model import EnsembleMoE
 from model import MoEbert
 from model import MoEbertConfig
 from transformers import DistilBertTokenizerFast
