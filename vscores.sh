@@ -1,4 +1,4 @@
-for dir in save/*/log_validation.txt
+for dir in save/*/log*validation.txt
 do
 	echo "$dir"
 	head -1 $dir
